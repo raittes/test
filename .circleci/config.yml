@@ -5,8 +5,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Test
+          name: Build
           command: make build
+  test:
+    machine: true
+    steps:
+      - run:
+          name: Run
+          command: make run
+      - run:
+          name: test
+          command: curl -v localhost
 
 workflows:
   version: 2
@@ -18,9 +27,11 @@ workflows:
               only: /.*/
             branches:
               ignore: /.*/
-#      - deploy:
-#          filters:
-#            tags:
-#              only: /.*/
-#            branches:
-#              ignore: /.*/
+      - test:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
