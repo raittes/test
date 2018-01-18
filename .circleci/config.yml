@@ -6,10 +6,10 @@ jobs:
       - checkout
       - run:
           name: Build
-          command: make build
+          command: make build version=${CIRCLE_TAG}
       - run:
           name: Run
-          command: make run
+          command: make run version=${CIRCLE_TAG}
       - run:
           name: Test
           command: make test
